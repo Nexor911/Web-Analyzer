@@ -3,7 +3,15 @@ import requests
 target = input("Введи url веб сайта: ")
 
 try:
-    response = requests.get(target)
+    response = requests.get(target, allow_redirects=True)
+    if response.history:
+        print("\n[!] Обнаружены редиректы:")
+        for idx, resp in enumerate(response.history):
+            loc = resp.headers.get("Location", "<не указан>")
+            print(f"  {idx + 1}) {resp.status_code} → {loc}")
+        print(f"[+] Финальный URL: {response.url}")
+    else:
+        print("[+] Редиректов не было. Финальный URL:", response.url)
     if response.status_code != 200:
         print(f"[!] Сервер вернул статус: {response.status_code}")
     else:
