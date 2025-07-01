@@ -1,13 +1,24 @@
 import requests
+import random
 
-user_agent = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0 "
+user_agent = [
+    "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 YaBrowser/20.9.3.136 Yowser/2.5 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.105 YaBrowser/21.3.3.230 Yowser/2.5 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/62.0",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.1; rv:84.0) Gecko/20100101 Firefox/84.0"
+]
+
+headers = {
+    "User-Agent": random.choice(user_agent)
 }
+print(f"Используетя User-Agent: {headers['User-Agent']}")
 
 target = input("Введи url веб сайта: ")
 
 try:
-    response = requests.get(target, allow_redirects=True, headers=user_agent)
+    response = requests.get(target, allow_redirects=True, headers=headers)
     if response.history:
         print("\n[!] Обнаружены редиректы:")
         for idx, resp in enumerate(response.history):
