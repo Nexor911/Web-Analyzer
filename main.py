@@ -1,9 +1,13 @@
 import requests
 
+user_agent = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0 "
+}
+
 target = input("Введи url веб сайта: ")
 
 try:
-    response = requests.get(target, allow_redirects=True)
+    response = requests.get(target, allow_redirects=True, headers=user_agent)
     if response.history:
         print("\n[!] Обнаружены редиректы:")
         for idx, resp in enumerate(response.history):
