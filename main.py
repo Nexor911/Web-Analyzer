@@ -1,6 +1,11 @@
 import requests
 import random
 
+proxy = {
+    "http": "http://96.70.186.221:80",
+    "https": "https://194.186.248.97:80"
+}
+
 user_agent = [
     "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0",
     "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 YaBrowser/20.9.3.136 Yowser/2.5 Safari/537.36",
@@ -24,7 +29,7 @@ print(f"Используетя User-Agent: {headers['User-Agent']}")
 target = input("Введи url веб сайта: ")
 
 try:
-    response = requests.get(target, allow_redirects=True, headers=headers)
+    response = requests.get(target, allow_redirects=True, headers=headers, proxies=proxy)
     if response.history:
         print("\n[!] Обнаружены редиректы:")
         for idx, resp in enumerate(response.history):
